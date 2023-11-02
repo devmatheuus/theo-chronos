@@ -13,7 +13,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View className="flex-1 justify-center items-center bg-black">
-      <Text className="text-primary-red">Home</Text>
+      <Text className="text-primary-red font-orbitron">00:00</Text>
     </View>
   );
 };
