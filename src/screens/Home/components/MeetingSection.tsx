@@ -25,10 +25,8 @@ const MeetingSection: React.FC<MeetingSectionProps> = ({ title }) => {
   };
 
   return (
-    <View
-      className={`flex-1 p-2 bg-primary-gray my-3 ${sectionBackground[title]}`}
-    >
-      <Text className="text-white uppercase text-lg">{title}</Text>
+    <View className={`p-2  my-3 ${sectionBackground[title]}`}>
+      <Text className="text-white uppercase text-lg font-bold">{title}</Text>
     </View>
   );
 };

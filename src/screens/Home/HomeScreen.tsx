@@ -20,11 +20,17 @@ export type TitleMarkerColorOptions =
 type currentSectionIndexOptions = 0 | 1 | 2;
 
 const HomeScreen: React.FC = () => {
+  const { meetingDataStructure } = useContext(TimerContext);
+  const navigation = useNavigation();
+
   const [showModal, setShowModal] = useState<boolean>(false);
+
   const [currentSectionIndex, setCurrentSectionIndex] =
     useState<currentSectionIndexOptions>(0);
 
-  const { meetingDataStructure } = useContext(TimerContext);
+  const [currentItem, setCurrentItem] = useState<CurrentItem>(
+    meetingDataStructure[0][0]
+  );
 
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
 
@@ -37,17 +43,6 @@ const HomeScreen: React.FC = () => {
       setCurrentItemIndex(meetingIndex);
     }
   };
-
-  useEffect(() => {
-    console.log(currentItemIndex);
-    console.log(meetingDataStructure[currentSectionIndex][currentItemIndex]);
-  }, [currentItemIndex]);
-
-  useEffect(() => {
-    console.log('current section index -------------------------------');
-    console.log(currentSectionIndex);
-    console.log('current section index -------------------------------');
-  }, [currentSectionIndex]);
 
   const handleCurrentSectionIndex = (
     titleMarkerColor: TitleMarkerColorOptions
@@ -64,12 +59,6 @@ const HomeScreen: React.FC = () => {
         break;
     }
   };
-
-  const navigation = useNavigation();
-
-  const [currentItem, setCurrentItem] = useState<CurrentItem>(
-    meetingDataStructure[0][0]
-  );
 
   const handleSetShowModal = (value: boolean) => {
     setShowModal(value);
@@ -88,7 +77,7 @@ const HomeScreen: React.FC = () => {
   const [firstSection, secondSection, thirdSection] = meetingDataStructure;
 
   return (
-    <SafeAreaView className="flex-1 relative justify-center items-center">
+    <SafeAreaView className="flex-1 relative justify-center">
       {showModal && (
         <ModalTimer
           setShowModal={setShowModal}
@@ -102,7 +91,7 @@ const HomeScreen: React.FC = () => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        className="flex-1 px-4 py-5"
+        className="flex-1 px-2 py-5"
       >
         <MeetingItem
           meetingData={meetingDataStructure[0][0]}
@@ -115,18 +104,16 @@ const HomeScreen: React.FC = () => {
         <View className="mb-8">
           <MeetingSection title="Tesouros da Palavra de Deus" />
 
-          {firstSection.map((item) => {
-            return (
-              <MeetingItem
-                meetingData={item}
-                key={item.id}
-                handleSetShowModal={handleSetShowModal}
-                handleCurrentItem={handleCurrentItem}
-                handleCurrentSectionIndex={handleCurrentSectionIndex}
-                handleCurrentItemIndex={handleCurrentItemIndex}
-              />
-            );
-          })}
+          {firstSection.map((item) => (
+            <MeetingItem
+              meetingData={item}
+              key={item.id}
+              handleSetShowModal={handleSetShowModal}
+              handleCurrentItem={handleCurrentItem}
+              handleCurrentSectionIndex={handleCurrentSectionIndex}
+              handleCurrentItemIndex={handleCurrentItemIndex}
+            />
+          ))}
 
           <MeetingSection title="Faça seu Melhor No Ministério" />
 

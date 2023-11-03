@@ -32,17 +32,14 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
 
   const minutesToSeconds = (minutes: number) => minutes * 60;
 
-  const handleMeetingDuration = () => {
+  const [totalSeconds, setTotalSeconds] = useState<number>(() => {
     const minutes = currentItem.duration.split(':')[0];
     const seconds = currentItem.duration.split(':')[1];
 
     const totalSeconds = minutesToSeconds(Number(minutes)) + Number(seconds);
 
     return totalSeconds;
-  };
-  const [totalSeconds, setTotalSeconds] = useState<number>(
-    handleMeetingDuration()
-  );
+  });
 
   useEffect(() => {
     if (start) {
@@ -75,6 +72,22 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
     }
   }, [totalSeconds]);
 
+  const resetMeetingItemDuration = () => {
+    setStart(false);
+    setTotalSeconds(0);
+
+    const updatedMeetingDataStructure = [
+      ...meetingDataStructure,
+    ] as MeetingStructure;
+
+    currentItem.duration = '00:00';
+
+    updatedMeetingDataStructure[currentSectionIndex][currentItemIndex] =
+      currentItem;
+
+    setMeetingDataStructure(updatedMeetingDataStructure);
+  };
+
   return (
     <SafeAreaView
       className="w-full h-screen  justify-center items-center absolute z-10"
@@ -101,10 +114,16 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
           >
             <Entypo name="controller-play" size={30} color="#5B75A0" />
           </TouchableOpacity>
-          <TouchableOpacity className="px-3 py-3 border border-solid border-primary-yellow rounded-sm">
+          <TouchableOpacity
+            className="px-3 py-3 border border-solid border-primary-yellow rounded-sm"
+            onPress={resetMeetingItemDuration}
+          >
             <MaterialCommunityIcons name="reload" size={30} color="#5B75A0" />
           </TouchableOpacity>
-          <TouchableOpacity className="px-3 py-3 border border-solid border-primary-yellow rounded-sm">
+          <TouchableOpacity
+            className="px-3 py-3 border border-solid border-primary-yellow rounded-sm"
+            onPress={closeModal}
+          >
             <Entypo name="check" size={30} color="#5B75A0" />
           </TouchableOpacity>
         </View>

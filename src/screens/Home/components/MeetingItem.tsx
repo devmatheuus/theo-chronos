@@ -30,7 +30,9 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
           <View className={`w-[2.5px] h-6 ${meetingData.titleMarkerColor}`} />
         )}
 
-        <Text className="text-base">{meetingData.title}</Text>
+        <Text className="text-base font-semibold text-gray-600">
+          {meetingData.title}
+        </Text>
       </View>
       <View>
         <View className="flex-row  items-center gap-3">
@@ -42,7 +44,7 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
             </View>
           )}
 
-          <Text className="text-2xl font-orbitron font-thin ml-5">
+          <Text className="text-2xl font-orbitron font-thin text-right text-gray-600">
             {meetingData.duration}
           </Text>
           <TouchableOpacity
