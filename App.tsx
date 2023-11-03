@@ -5,6 +5,7 @@ import HomeScreen from '@/screens/Home/HomeScreen';
 import { StatusBar, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { TimerProvider } from '@/contexts/timer';
 
 export type AppRootStackParamList = {
   Home: undefined;
@@ -32,9 +33,11 @@ const App: React.FC = () => {
     <View onLayout={onLayoutRootView} className="flex-1">
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-        </Stack.Navigator>
+        <TimerProvider>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeScreen} />
+          </Stack.Navigator>
+        </TimerProvider>
       </NavigationContainer>
     </View>
   );

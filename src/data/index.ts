@@ -13,7 +13,7 @@ export type MeetingItems = {
 
 type MeetingSection = MeetingItems[];
 
-type MeetingStructure = [MeetingSection, MeetingSection, MeetingSection];
+export type MeetingStructure = [MeetingSection, MeetingSection, MeetingSection];
 
 export const meetingStructure: MeetingStructure = [
   [

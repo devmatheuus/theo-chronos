@@ -1,59 +1,62 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Entypo as PlayIcon } from '@expo/vector-icons';
 import React from 'react';
-import { CurrentItem } from '../HomeScreen';
-
-type TitleMarkerColorOptions =
-  | 'bg-primary-gray'
-  | 'bg-primary-yellow'
-  | 'bg-primary-red';
+import { CurrentItem, TitleMarkerColorOptions } from '../HomeScreen';
+import { MeetingItems } from '@/data';
 
 type MeetingItemProps = {
-  title: string;
-  duration: string;
-  expectedTime?: number;
+  meetingData: MeetingItems;
   showTitleMarker?: boolean;
-  titleMarkerColor?: TitleMarkerColorOptions;
   handleSetShowModal: (value: boolean) => void;
   handleCurrentItem: (meetingData: CurrentItem) => void;
+  handleCurrentSectionIndex: (
+    titleMarkerColor: TitleMarkerColorOptions
+  ) => void;
+  handleCurrentItemIndex: (meetingItemId: number) => void;
 };
 
 const MeetingItem: React.FC<MeetingItemProps> = ({
-  duration,
-  title,
-  expectedTime,
+  meetingData,
   showTitleMarker = true,
-  titleMarkerColor = 'bg-primary-gray',
   handleSetShowModal,
   handleCurrentItem,
+  handleCurrentSectionIndex,
+  handleCurrentItemIndex,
 }) => {
   return (
     <View className="flex-row justify-between items-center my-1">
       <View className="flex-row items-center gap-1">
         {showTitleMarker && (
-          <View className={`w-[2.5px] h-6 ${titleMarkerColor}`} />
+          <View className={`w-[2.5px] h-6 ${meetingData.titleMarkerColor}`} />
         )}
 
-        <Text className="text-base">{title}</Text>
+        <Text className="text-base">{meetingData.title}</Text>
       </View>
       <View>
         <View className="flex-row  items-center gap-3">
-          {!!expectedTime && (
+          {!!meetingData.expectedTime && (
             <View className="relative h-full">
               <Text className="text-xs font-orbitron absolute top-0 -left-1">
-                {expectedTime}'
+                {meetingData.expectedTime}'
               </Text>
             </View>
           )}
 
           <Text className="text-2xl font-orbitron font-thin ml-5">
-            {duration}
+            {meetingData.duration}
           </Text>
           <TouchableOpacity
             className="px-3 py-1 border border-solid border-primary-yellow rounded-sm"
             onPress={() => {
               handleSetShowModal(true);
-              handleCurrentItem({ duration, title });
+              handleCurrentItem({
+                duration: meetingData.duration,
+                title: meetingData.title,
+                id: meetingData.id,
+                titleMarkerColor: meetingData.titleMarkerColor,
+              });
+              handleCurrentSectionIndex(meetingData.titleMarkerColor);
+              handleCurrentItemIndex(meetingData.id);
             }}
           >
             <PlayIcon name="controller-play" size={24} color="#5B75A0" />
