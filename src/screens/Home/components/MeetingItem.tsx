@@ -23,20 +23,27 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
   titleMarkerColor = 'bg-primary-gray',
 }) => {
   return (
-    <View className="flex-row justify-between items-center">
+    <View className="flex-row justify-between items-center my-1">
       <View className="flex-row items-center gap-1">
-        {showTitleMarker && <View className={`w-1 h-5 ${titleMarkerColor}`} />}
+        {showTitleMarker && (
+          <View className={`w-[2.5px] h-6 ${titleMarkerColor}`} />
+        )}
 
         <Text className="text-base">{title}</Text>
       </View>
       <View>
-        <View className="flex-row relative items-center gap-3">
+        <View className="flex-row  items-center gap-3">
           {!!expectedTime && (
-            <Text className="text-xs font-orbitron absolute top-0 left-[-8%]">
-              {expectedTime}'
-            </Text>
+            <View className="relative h-full">
+              <Text className="text-xs font-orbitron absolute top-0 -left-1">
+                {expectedTime}'
+              </Text>
+            </View>
           )}
-          <Text className="text-2xl font-orbitron font-thin">{duration}</Text>
+
+          <Text className="text-2xl font-orbitron font-thin ml-5">
+            {duration}
+          </Text>
           <TouchableOpacity className="px-3 py-1 border border-solid border-primary-yellow rounded-sm">
             <PlayIcon name="controller-play" size={24} color="#5B75A0" />
           </TouchableOpacity>
