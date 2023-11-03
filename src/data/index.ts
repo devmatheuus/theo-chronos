@@ -3,7 +3,7 @@ type SectionBackgroundOptions =
   | 'bg-primary-yellow'
   | 'bg-primary-red';
 
-type MeetingItems = {
+export type MeetingItems = {
   title: string;
   duration: string;
   expectedTime?: number;

@@ -1,12 +1,27 @@
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import MeetingItem from './components/MeetingItem';
 import MeetingSection from './components/MeetingSection';
-import { meetingStructure } from '@/data';
+import { MeetingItems, meetingStructure } from '@/data';
+import ModalTimer from './components/ModalTimer';
+
+export type CurrentItem = Pick<MeetingItems, 'duration' | 'title'>;
 
 const HomeScreen: React.FC = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const navigation = useNavigation();
+
+  const currentItem = useRef<CurrentItem>(meetingStructure[0][0]);
+
+  const handleSetShowModal = (value: boolean) => {
+    setShowModal(value);
+  };
+
+  const handleCurrentItem = (meetingDatas: CurrentItem) => {
+    currentItem.current = meetingDatas;
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -17,7 +32,15 @@ const HomeScreen: React.FC = () => {
   const [firstSection, secondSection, thirdSection] = meetingStructure;
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 relative justify-center items-center">
+      {showModal && (
+        <ModalTimer
+          setShowModal={setShowModal}
+          duration={currentItem.current.duration}
+          title={currentItem.current.title}
+        />
+      )}
+
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -28,6 +51,8 @@ const HomeScreen: React.FC = () => {
           title="Comentários iniciais"
           expectedTime={3}
           showTitleMarker={false}
+          handleSetShowModal={handleSetShowModal}
+          handleCurrentItem={handleCurrentItem}
         />
         <View className="mb-8">
           <MeetingSection title="Tesouros da Palavra de Deus" />
@@ -39,6 +64,8 @@ const HomeScreen: React.FC = () => {
               expectedTime={item?.expectedTime}
               titleMarkerColor={item.titleMarkerColor}
               key={item.id}
+              handleSetShowModal={handleSetShowModal}
+              handleCurrentItem={handleCurrentItem}
             />
           ))}
 
@@ -51,6 +78,8 @@ const HomeScreen: React.FC = () => {
               expectedTime={item?.expectedTime}
               titleMarkerColor={item.titleMarkerColor}
               key={item.id}
+              handleSetShowModal={handleSetShowModal}
+              handleCurrentItem={handleCurrentItem}
             />
           ))}
 
@@ -63,6 +92,8 @@ const HomeScreen: React.FC = () => {
               expectedTime={item?.expectedTime}
               titleMarkerColor={item.titleMarkerColor}
               key={item.id}
+              handleSetShowModal={handleSetShowModal}
+              handleCurrentItem={handleCurrentItem}
             />
           ))}
         </View>

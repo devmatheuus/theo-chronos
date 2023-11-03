@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Entypo as PlayIcon } from '@expo/vector-icons';
 import React from 'react';
+import { CurrentItem } from '../HomeScreen';
 
 type TitleMarkerColorOptions =
   | 'bg-primary-gray'
@@ -9,10 +10,12 @@ type TitleMarkerColorOptions =
 
 type MeetingItemProps = {
   title: string;
-  duration: number | string;
+  duration: string;
   expectedTime?: number;
   showTitleMarker?: boolean;
   titleMarkerColor?: TitleMarkerColorOptions;
+  handleSetShowModal: (value: boolean) => void;
+  handleCurrentItem: (meetingData: CurrentItem) => void;
 };
 
 const MeetingItem: React.FC<MeetingItemProps> = ({
@@ -21,6 +24,8 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
   expectedTime,
   showTitleMarker = true,
   titleMarkerColor = 'bg-primary-gray',
+  handleSetShowModal,
+  handleCurrentItem,
 }) => {
   return (
     <View className="flex-row justify-between items-center my-1">
@@ -44,7 +49,13 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
           <Text className="text-2xl font-orbitron font-thin ml-5">
             {duration}
           </Text>
-          <TouchableOpacity className="px-3 py-1 border border-solid border-primary-yellow rounded-sm">
+          <TouchableOpacity
+            className="px-3 py-1 border border-solid border-primary-yellow rounded-sm"
+            onPress={() => {
+              handleSetShowModal(true);
+              handleCurrentItem({ duration, title });
+            }}
+          >
             <PlayIcon name="controller-play" size={24} color="#5B75A0" />
           </TouchableOpacity>
         </View>
