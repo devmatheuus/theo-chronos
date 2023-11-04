@@ -10,7 +10,7 @@ type ModalTimerProps = {
   title: string;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   currentItem: CurrentItem;
-  currentSectionIndex: 0 | 1 | 2;
+  currentSectionIndex: 0 | 1 | 2 | 3;
   currentItemIndex: number;
 };
 

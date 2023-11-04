@@ -36,28 +36,25 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
       </View>
       <View>
         <View className="flex-row  items-center gap-3">
-          {!!meetingData.expectedTime && (
-            <View className="relative h-full">
-              <Text className="text-xs font-orbitron absolute top-0 -left-1">
+          {meetingData?.expectedTime && (
+            <View className="relative h-full w-fit">
+              <Text className="text-xs font-orbitron absolute top-0 -left-1 ">
                 {meetingData.expectedTime}'
               </Text>
             </View>
           )}
 
-          <Text className="text-2xl font-orbitron font-thin text-right text-gray-600">
+          <Text className="text-2xl font-orbitron font-thin text-right text-gray-600 min-w-fit">
             {meetingData.duration}
           </Text>
           <TouchableOpacity
             className="px-3 py-1 border border-solid border-primary-yellow rounded-sm"
             onPress={() => {
               handleSetShowModal(true);
-              handleCurrentItem({
-                duration: meetingData.duration,
-                title: meetingData.title,
-                id: meetingData.id,
-                titleMarkerColor: meetingData.titleMarkerColor,
-              });
-              handleCurrentSectionIndex(meetingData.titleMarkerColor);
+              handleCurrentItem({ ...meetingData });
+              handleCurrentSectionIndex(
+                meetingData.titleMarkerColor ?? 'not defined'
+              );
               handleCurrentItemIndex(meetingData.id);
             }}
           >

@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useState, useContext, useEffect } from 'react';
+import React, { useLayoutEffect, useState, useContext } from 'react';
 import MeetingItem from './components/MeetingItem';
 import MeetingSection from './components/MeetingSection';
 import { MeetingItems } from '@/data';
@@ -15,9 +15,10 @@ export type CurrentItem = Pick<
 export type TitleMarkerColorOptions =
   | 'bg-primary-gray'
   | 'bg-primary-yellow'
-  | 'bg-primary-red';
+  | 'bg-primary-red'
+  | 'not defined';
 
-type currentSectionIndexOptions = 0 | 1 | 2;
+type currentSectionIndexOptions = 0 | 1 | 2 | 3;
 
 const HomeScreen: React.FC = () => {
   const { meetingDataStructure } = useContext(TimerContext);
@@ -57,6 +58,9 @@ const HomeScreen: React.FC = () => {
       case 'bg-primary-red':
         setCurrentSectionIndex(2);
         break;
+      default:
+        setCurrentSectionIndex(3);
+        break;
     }
   };
 
@@ -74,7 +78,8 @@ const HomeScreen: React.FC = () => {
     });
   }, []);
 
-  const [firstSection, secondSection, thirdSection] = meetingDataStructure;
+  const [firstSection, secondSection, thirdSection, initialComments] =
+    meetingDataStructure;
 
   return (
     <SafeAreaView className="flex-1 relative justify-center">
@@ -94,7 +99,7 @@ const HomeScreen: React.FC = () => {
         className="flex-1 px-2 py-5"
       >
         <MeetingItem
-          meetingData={meetingDataStructure[0][0]}
+          meetingData={initialComments[0]}
           showTitleMarker={false}
           handleSetShowModal={handleSetShowModal}
           handleCurrentItem={handleCurrentItem}

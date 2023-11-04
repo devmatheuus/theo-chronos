@@ -7,13 +7,18 @@ export type MeetingItems = {
   title: string;
   duration: string;
   expectedTime?: number;
-  titleMarkerColor: SectionBackgroundOptions;
+  titleMarkerColor?: SectionBackgroundOptions;
   id: number;
 };
 
 type MeetingSection = MeetingItems[];
 
-export type MeetingStructure = [MeetingSection, MeetingSection, MeetingSection];
+export type MeetingStructure = [
+  MeetingSection,
+  MeetingSection,
+  MeetingSection,
+  MeetingSection
+];
 
 export const meetingStructure: MeetingStructure = [
   [
@@ -114,6 +119,15 @@ export const meetingStructure: MeetingStructure = [
       expectedTime: 3,
       titleMarkerColor: 'bg-primary-red',
       id: 15,
+    },
+  ],
+
+  [
+    {
+      title: 'Comentários iniciais',
+      duration: '00:00',
+      expectedTime: 3,
+      id: 16,
     },
   ],
 ];

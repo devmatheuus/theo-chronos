@@ -6,7 +6,6 @@ type TimerContextType = {
   setMeetingDataStructure: React.Dispatch<
     React.SetStateAction<MeetingStructure>
   >;
-  totalSeconds: number;
 };
 
 export const TimerContext = createContext<TimerContextType>(
@@ -17,14 +16,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
   const [meetingDataStructure, setMeetingDataStructure] =
     useState(meetingStructure);
 
-  const [totalSeconds, setTotalSeconds] = useState<number>(0);
-
   return (
     <TimerContext.Provider
       value={{
         meetingDataStructure,
         setMeetingDataStructure,
-        totalSeconds,
       }}
     >
       {children}
