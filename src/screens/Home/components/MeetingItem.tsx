@@ -9,9 +9,7 @@ type MeetingItemProps = {
   showTitleMarker?: boolean;
   handleSetShowModal: (value: boolean) => void;
   handleCurrentItem: (meetingData: CurrentItem) => void;
-  handleCurrentSectionIndex: (
-    titleMarkerColor: TitleMarkerColorOptions
-  ) => void;
+  handleCurrentSectionIndex: (titleMarkerColor: TitleMarkerColorOptions) => void;
   handleCurrentItemIndex: (meetingItemId: number) => void;
 };
 
@@ -26,21 +24,15 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
   return (
     <View className="flex-row justify-between items-center my-1">
       <View className="flex-row items-center gap-1">
-        {showTitleMarker && (
-          <View className={`w-[2.5px] h-6 ${meetingData.titleMarkerColor}`} />
-        )}
+        {showTitleMarker && <View className={`w-[2.5px] h-6 ${meetingData.titleMarkerColor}`} />}
 
-        <Text className="text-base font-semibold text-gray-600">
-          {meetingData.title}
-        </Text>
+        <Text className="text-base font-semibold text-gray-600">{meetingData.title}</Text>
       </View>
       <View>
         <View className="flex-row  items-center gap-3">
           {meetingData?.expectedTime && (
             <View className="relative h-full w-fit">
-              <Text className="text-xs font-orbitron absolute top-0 -left-1 ">
-                {meetingData.expectedTime}'
-              </Text>
+              <Text className="text-xs font-orbitron absolute top-0 -left-1 ">{meetingData.expectedTime}'</Text>
             </View>
           )}
 
@@ -52,9 +44,7 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
             onPress={() => {
               handleSetShowModal(true);
               handleCurrentItem({ ...meetingData });
-              handleCurrentSectionIndex(
-                meetingData.titleMarkerColor ?? 'not defined'
-              );
+              handleCurrentSectionIndex(meetingData.titleMarkerColor ?? 'not defined');
               handleCurrentItemIndex(meetingData.id);
             }}
           >

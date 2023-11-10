@@ -7,16 +7,9 @@ import { MeetingItems } from '@/data';
 import ModalTimer from './components/ModalTimer';
 import { TimerContext } from '@/contexts/timer';
 
-export type CurrentItem = Pick<
-  MeetingItems,
-  'duration' | 'title' | 'id' | 'titleMarkerColor'
->;
+export type CurrentItem = Pick<MeetingItems, 'duration' | 'title' | 'id' | 'titleMarkerColor'>;
 
-export type TitleMarkerColorOptions =
-  | 'bg-primary-gray'
-  | 'bg-primary-yellow'
-  | 'bg-primary-red'
-  | 'not defined';
+export type TitleMarkerColorOptions = 'bg-primary-gray' | 'bg-primary-yellow' | 'bg-primary-red' | 'not defined';
 
 type currentSectionIndexOptions = 0 | 1 | 2 | 3;
 
@@ -26,28 +19,21 @@ const HomeScreen: React.FC = () => {
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const [currentSectionIndex, setCurrentSectionIndex] =
-    useState<currentSectionIndexOptions>(0);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState<currentSectionIndexOptions>(0);
 
-  const [currentItem, setCurrentItem] = useState<CurrentItem>(
-    meetingDataStructure[0][0]
-  );
+  const [currentItem, setCurrentItem] = useState<CurrentItem>(meetingDataStructure[0][0]);
 
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
 
   const handleCurrentItemIndex = (meetingItemId: number) => {
-    const meetingIndex = meetingDataStructure[currentSectionIndex].findIndex(
-      (i) => i.id === meetingItemId
-    );
+    const meetingIndex = meetingDataStructure[currentSectionIndex].findIndex((i) => i.id === meetingItemId);
 
     if (meetingIndex !== -1) {
       setCurrentItemIndex(meetingIndex);
     }
   };
 
-  const handleCurrentSectionIndex = (
-    titleMarkerColor: TitleMarkerColorOptions
-  ) => {
+  const handleCurrentSectionIndex = (titleMarkerColor: TitleMarkerColorOptions) => {
     switch (titleMarkerColor) {
       case 'bg-primary-gray':
         setCurrentSectionIndex(0);
@@ -78,8 +64,7 @@ const HomeScreen: React.FC = () => {
     });
   }, []);
 
-  const [firstSection, secondSection, thirdSection, initialComments] =
-    meetingDataStructure;
+  const [firstSection, secondSection, thirdSection, initialComments] = meetingDataStructure;
 
   return (
     <SafeAreaView className="flex-1 relative justify-center">

@@ -21,8 +21,7 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
   currentSectionIndex,
   currentItemIndex,
 }) => {
-  const { meetingDataStructure, setMeetingDataStructure } =
-    useContext(TimerContext);
+  const { meetingDataStructure, setMeetingDataStructure } = useContext(TimerContext);
 
   const [start, setStart] = useState<boolean>(false);
 
@@ -55,18 +54,13 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
     if (totalSeconds !== 0) {
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
-      const formattedTime = `${String(minutes).padStart(2, '0')}:${String(
-        seconds
-      ).padStart(2, '0')}`;
+      const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-      const updatedMeetingDataStructure = [
-        ...meetingDataStructure,
-      ] as MeetingStructure;
+      const updatedMeetingDataStructure = [...meetingDataStructure] as MeetingStructure;
 
       currentItem.duration = formattedTime;
 
-      updatedMeetingDataStructure[currentSectionIndex][currentItemIndex] =
-        currentItem;
+      updatedMeetingDataStructure[currentSectionIndex][currentItemIndex] = currentItem;
 
       setMeetingDataStructure(updatedMeetingDataStructure);
     }
@@ -76,14 +70,11 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
     setStart(false);
     setTotalSeconds(0);
 
-    const updatedMeetingDataStructure = [
-      ...meetingDataStructure,
-    ] as MeetingStructure;
+    const updatedMeetingDataStructure = [...meetingDataStructure] as MeetingStructure;
 
     currentItem.duration = '00:00';
 
-    updatedMeetingDataStructure[currentSectionIndex][currentItemIndex] =
-      currentItem;
+    updatedMeetingDataStructure[currentSectionIndex][currentItemIndex] = currentItem;
 
     setMeetingDataStructure(updatedMeetingDataStructure);
   };
@@ -94,18 +85,13 @@ const ModalTimer: React.FC<ModalTimerProps> = ({
       style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
     >
       <View className="rounded-md shadow-lg justify-center items-center bg-white space-y-10 py-8 px-10 relative">
-        <TouchableOpacity
-          className="absolute top-2 right-2"
-          onPress={closeModal}
-        >
+        <TouchableOpacity className="absolute top-2 right-2" onPress={closeModal}>
           <Ionicons name="close-outline" size={34} color="#5B75A0" />
         </TouchableOpacity>
 
         <Text className="text-base mb-8">{title}</Text>
 
-        <Text className="font-orbitron text-5xl text-primary-blue mb-8">
-          {currentItem.duration}
-        </Text>
+        <Text className="font-orbitron text-5xl text-primary-blue mb-8">{currentItem.duration}</Text>
 
         <View className="flex-row gap-5">
           <TouchableOpacity
