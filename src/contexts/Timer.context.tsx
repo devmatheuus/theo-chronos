@@ -1,11 +1,8 @@
-import { MeetingStructure, meetingStructure } from '@/data';
 import React, { createContext, useState, ReactNode } from 'react';
 
 type TimerContextType = {
-  meetingDataStructure: MeetingStructure;
-  setMeetingDataStructure: React.Dispatch<
-    React.SetStateAction<MeetingStructure>
-  >;
+  showModal: boolean;
+  handleModal: () => void;
 };
 
 export const TimerContext = createContext<TimerContextType>(
@@ -13,14 +10,17 @@ export const TimerContext = createContext<TimerContextType>(
 );
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
-  const [meetingDataStructure, setMeetingDataStructure] =
-    useState(meetingStructure);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModal = () => {
+    setShowModal((prev) => !prev);
+  };
 
   return (
     <TimerContext.Provider
       value={{
-        meetingDataStructure,
-        setMeetingDataStructure,
+        showModal,
+        handleModal,
       }}
     >
       {children}

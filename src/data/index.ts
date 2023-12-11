@@ -1,133 +1,160 @@
-type SectionBackgroundOptions =
-  | 'bg-primary-gray'
-  | 'bg-primary-yellow'
-  | 'bg-primary-red';
+import { MeetingStructure } from './types/MeetingStructure.type';
+import { v4 } from 'uuid';
 
-export type MeetingItems = {
-  title: string;
-  duration: string;
-  expectedTime?: number;
-  titleMarkerColor?: SectionBackgroundOptions;
-  id: number;
-};
-
-type MeetingSection = MeetingItems[];
-
-export type MeetingStructure = [
-  MeetingSection,
-  MeetingSection,
-  MeetingSection,
-  MeetingSection
-];
+// Esses são os dados que serão utilizados para renderizar as reuniões em sua respectiva seção.
 
 export const meetingStructure: MeetingStructure = [
   [
     {
+      title: 'Comentários iniciais',
+      duration: null,
+      expectedTime: 3,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 0,
+    },
+  ],
+  [
+    {
       title: 'Discurso',
-      duration: '00:00',
+      duration: null,
       expectedTime: 10,
       titleMarkerColor: 'bg-primary-gray',
-      id: 1,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 1,
     },
     {
       title: 'Encontre joias espirituais',
-      duration: '00:00',
+      duration: null,
       expectedTime: 10,
       titleMarkerColor: 'bg-primary-gray',
-      id: 2,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 1,
     },
     {
       title: 'Leitura da Bíblia',
-      duration: '00:00',
+      duration: null,
       expectedTime: 4,
       titleMarkerColor: 'bg-primary-gray',
-      id: 3,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 1,
     },
     {
-      title: 'Observações',
-      duration: '00:00',
+      title: 'Avaliação - Leitura da Bíblia',
+      duration: null,
       titleMarkerColor: 'bg-primary-gray',
-      id: 4,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 1,
     },
   ],
 
   [
     {
       title: 'Primeira conversa',
-      duration: '00:00',
+      duration: null,
       expectedTime: 4,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 5,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
     {
-      title: 'Observações',
-      duration: '00:00',
+      title: 'Avaliação - Primeira conversa',
+      duration: null,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 6,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
     {
       title: 'Revisita',
-      duration: '00:00',
+      duration: null,
       expectedTime: 10,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 8,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
     {
-      title: 'Observações',
-      duration: '00:00',
+      title: 'Avaliação - Revisita',
+      duration: null,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 9,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
     {
       title: 'Estudo/Discurso',
-      duration: '00:00',
+      duration: null,
       expectedTime: 5,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 10,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
     {
-      title: 'Observações',
-      duration: '00:00',
+      title: 'Avaliação - Estudo/Discurso',
+      duration: null,
       titleMarkerColor: 'bg-primary-yellow',
-      id: 11,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 2,
     },
   ],
 
   [
     {
       title: 'Primeira parte',
-      duration: '00:00',
+      duration: null,
       titleMarkerColor: 'bg-primary-red',
-      id: 12,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 3,
     },
     {
       title: 'Segunda parte',
-      duration: '00:00',
+      duration: null,
       titleMarkerColor: 'bg-primary-red',
-      id: 13,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 3,
     },
     {
       title: 'Estudo Bíblico',
-      duration: '00:00',
+      duration: null,
       expectedTime: 30,
       titleMarkerColor: 'bg-primary-red',
-      id: 14,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 3,
     },
     {
       title: 'Comentários finais',
-      duration: '00:00',
+      duration: null,
       expectedTime: 3,
       titleMarkerColor: 'bg-primary-red',
-      id: 15,
-    },
-  ],
-
-  [
-    {
-      title: 'Comentários iniciais',
-      duration: '00:00',
-      expectedTime: 3,
-      id: 16,
+      id: v4(),
+      startTime: null,
+      endTime: null,
+      section: 3,
     },
   ],
 ];

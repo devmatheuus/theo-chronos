@@ -1,28 +1,23 @@
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Entypo as PlayIcon } from '@expo/vector-icons';
-import React from 'react';
-import { CurrentItem, TitleMarkerColorOptions } from '../HomeScreen';
-import { MeetingItems } from '@/data';
+import { MeetingItems } from '@/data/types/MeetingItems.type';
+import { useTimer } from '@/hooks/useTimer';
+import { useMeeting } from '@/hooks/useMeeting';
+import { formatSecondsToTime } from '@/utils/formatSecondsToTime.utils';
 
 type MeetingItemProps = {
   meetingData: MeetingItems;
   showTitleMarker?: boolean;
-  handleSetShowModal: (value: boolean) => void;
-  handleCurrentItem: (meetingData: CurrentItem) => void;
-  handleCurrentSectionIndex: (
-    titleMarkerColor: TitleMarkerColorOptions
-  ) => void;
-  handleCurrentItemIndex: (meetingItemId: number) => void;
 };
 
 const MeetingItem: React.FC<MeetingItemProps> = ({
   meetingData,
   showTitleMarker = true,
-  handleSetShowModal,
-  handleCurrentItem,
-  handleCurrentSectionIndex,
-  handleCurrentItemIndex,
 }) => {
+  const { handleModal } = useTimer();
+  const { setCurrentMeetingItemById } = useMeeting();
+
   return (
     <View className="flex-row justify-between items-center my-1">
       <View className="flex-row items-center gap-1">
@@ -45,17 +40,13 @@ const MeetingItem: React.FC<MeetingItemProps> = ({
           )}
 
           <Text className="text-2xl font-orbitron font-thin text-right text-gray-600 min-w-fit">
-            {meetingData.duration}
+            {formatSecondsToTime(meetingData.duration)}
           </Text>
           <TouchableOpacity
             className="px-3 py-1 border border-solid border-primary-yellow rounded-sm"
             onPress={() => {
-              handleSetShowModal(true);
-              handleCurrentItem({ ...meetingData });
-              handleCurrentSectionIndex(
-                meetingData.titleMarkerColor ?? 'not defined'
-              );
-              handleCurrentItemIndex(meetingData.id);
+              handleModal();
+              setCurrentMeetingItemById(meetingData.id);
             }}
           >
             <PlayIcon name="controller-play" size={24} color="#5B75A0" />

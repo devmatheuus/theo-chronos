@@ -1,97 +1,31 @@
+import React, { useLayoutEffect, useState, useContext } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useState, useContext } from 'react';
-import MeetingItem from './components/MeetingItem';
-import MeetingSection from './components/MeetingSection';
-import { MeetingItems } from '@/data';
-import ModalTimer from './components/ModalTimer';
-import { TimerContext } from '@/contexts/timer';
-
-export type CurrentItem = Pick<
-  MeetingItems,
-  'duration' | 'title' | 'id' | 'titleMarkerColor'
->;
-
-export type TitleMarkerColorOptions =
-  | 'bg-primary-gray'
-  | 'bg-primary-yellow'
-  | 'bg-primary-red'
-  | 'not defined';
-
-type currentSectionIndexOptions = 0 | 1 | 2 | 3;
+import { TimerContext } from '@/contexts/Timer.context';
+import { MeetingItem, MeetingSection, ModalTimer } from './components';
+import { useTimer } from '@/hooks/useTimer';
+import { useMeeting } from '@/hooks/useMeeting';
 
 const HomeScreen: React.FC = () => {
-  const { meetingDataStructure } = useContext(TimerContext);
   const navigation = useNavigation();
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  const [currentSectionIndex, setCurrentSectionIndex] =
-    useState<currentSectionIndexOptions>(0);
-
-  const [currentItem, setCurrentItem] = useState<CurrentItem>(
-    meetingDataStructure[0][0]
-  );
-
-  const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
-
-  const handleCurrentItemIndex = (meetingItemId: number) => {
-    const meetingIndex = meetingDataStructure[currentSectionIndex].findIndex(
-      (i) => i.id === meetingItemId
-    );
-
-    if (meetingIndex !== -1) {
-      setCurrentItemIndex(meetingIndex);
-    }
-  };
-
-  const handleCurrentSectionIndex = (
-    titleMarkerColor: TitleMarkerColorOptions
-  ) => {
-    switch (titleMarkerColor) {
-      case 'bg-primary-gray':
-        setCurrentSectionIndex(0);
-        break;
-      case 'bg-primary-yellow':
-        setCurrentSectionIndex(1);
-        break;
-      case 'bg-primary-red':
-        setCurrentSectionIndex(2);
-        break;
-      default:
-        setCurrentSectionIndex(3);
-        break;
-    }
-  };
-
-  const handleSetShowModal = (value: boolean) => {
-    setShowModal(value);
-  };
-
-  const handleCurrentItem = (meetingItem: CurrentItem) => {
-    setCurrentItem(meetingItem);
-  };
-
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
+    navigation.setOptions({ headerShown: false }); // Oculta o header da tela
   }, []);
 
-  const [firstSection, secondSection, thirdSection, initialComments] =
-    meetingDataStructure;
+  const { showModal } = useTimer();
+  const { meetingDataStructure } = useMeeting();
+
+  const [
+    initialComments, // Seção dos comentários iniciais
+    treasuresSection, // Seção dos tesouros da palavra de Deus
+    ministrySection, // Seção do faça seu melhor no ministério
+    christianLifeSection, // Seção da nossa vida cristã
+  ] = meetingDataStructure;
 
   return (
     <SafeAreaView className="flex-1 relative justify-center">
-      {showModal && (
-        <ModalTimer
-          setShowModal={setShowModal}
-          title={currentItem.title}
-          currentItem={currentItem}
-          currentSectionIndex={currentSectionIndex}
-          currentItemIndex={currentItemIndex}
-        />
-      )}
+      {showModal && <ModalTimer />}
 
       <ScrollView
         showsHorizontalScrollIndicator={false}
@@ -101,49 +35,23 @@ const HomeScreen: React.FC = () => {
         <MeetingItem
           meetingData={initialComments[0]}
           showTitleMarker={false}
-          handleSetShowModal={handleSetShowModal}
-          handleCurrentItem={handleCurrentItem}
-          handleCurrentSectionIndex={handleCurrentSectionIndex}
-          handleCurrentItemIndex={handleCurrentItemIndex}
+          key={initialComments[0].id}
         />
+
         <View className="mb-8">
           <MeetingSection title="Tesouros da Palavra de Deus" />
-
-          {firstSection.map((item) => (
-            <MeetingItem
-              meetingData={item}
-              key={item.id}
-              handleSetShowModal={handleSetShowModal}
-              handleCurrentItem={handleCurrentItem}
-              handleCurrentSectionIndex={handleCurrentSectionIndex}
-              handleCurrentItemIndex={handleCurrentItemIndex}
-            />
+          {treasuresSection.map((item) => (
+            <MeetingItem meetingData={item} key={item.id} />
           ))}
 
           <MeetingSection title="Faça seu Melhor No Ministério" />
-
-          {secondSection.map((item) => (
-            <MeetingItem
-              meetingData={item}
-              key={item.id}
-              handleSetShowModal={handleSetShowModal}
-              handleCurrentSectionIndex={handleCurrentSectionIndex}
-              handleCurrentItemIndex={handleCurrentItemIndex}
-              handleCurrentItem={handleCurrentItem}
-            />
+          {ministrySection.map((item) => (
+            <MeetingItem meetingData={item} key={item.id} />
           ))}
 
           <MeetingSection title="Nossa Vida Cristã" />
-
-          {thirdSection.map((item) => (
-            <MeetingItem
-              meetingData={item}
-              key={item.id}
-              handleSetShowModal={handleSetShowModal}
-              handleCurrentItem={handleCurrentItem}
-              handleCurrentSectionIndex={handleCurrentSectionIndex}
-              handleCurrentItemIndex={handleCurrentItemIndex}
-            />
+          {christianLifeSection.map((item) => (
+            <MeetingItem meetingData={item} key={item.id} />
           ))}
         </View>
       </ScrollView>
