@@ -1,20 +1,14 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-type MeetingTitleOptions =
-  | 'Tesouros da Palavra de Deus'
-  | 'Faça seu Melhor No Ministério'
-  | 'Nossa Vida Cristã';
+type MeetingTitleOptions = 'Tesouros da Palavra de Deus' | 'Faça seu Melhor No Ministério' | 'Nossa Vida Cristã';
 
 type MeetingSectionProps = {
   title: MeetingTitleOptions;
 };
 
 type SectionBackground = {
-  [key in MeetingTitleOptions]:
-    | 'bg-primary-gray'
-    | 'bg-primary-yellow'
-    | 'bg-primary-red';
+  [key in MeetingTitleOptions]: 'bg-primary-gray' | 'bg-primary-yellow' | 'bg-primary-red';
 };
 
 const MeetingSection: React.FC<MeetingSectionProps> = ({ title }) => {
